@@ -3,3 +3,6 @@ matplotlib
 pandas
 numpy
 scikit_learn
+torch
+torchvision
+torchaudio
