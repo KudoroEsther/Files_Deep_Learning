@@ -8,3 +8,5 @@ torchvision
 torchaudio
 scipy
 dotenv
+openai
+google.genai
