@@ -10,3 +10,4 @@ scipy
 dotenv
 openai
 google.genai
+hf_xet
