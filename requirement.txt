@@ -11,3 +11,7 @@ dotenv
 openai
 google.genai
 hf_xet
+gdown
+PyPDF2
+chromadb
+sentence-transformer
