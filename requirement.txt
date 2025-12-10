@@ -15,3 +15,9 @@ gdown
 PyPDF2
 chromadb
 sentence-transformer
+faiss-cpu
+langchain 
+langchain-core 
+langchain-community 
+langchain-openai 
+langchain-text-splitters
