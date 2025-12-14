@@ -1,0 +1,6 @@
+Esther Kudoro developed a machine learning model for fault prediction in electrical transmission lines.
+The model was designed to classify different types of electrical faults, including line-to-ground and line-to-line-ground faults.
+She performed feature engineering using voltage and current signals to improve model performance.
+The machine learning model achieved very high classification accuracy.
+The model was deployed using FastAPI to enable real-time fault prediction.
+Esther has also been involved in teaching and mentoring in robotics and embedded systems workshops.

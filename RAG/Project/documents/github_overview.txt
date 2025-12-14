@@ -1,0 +1,4 @@
+Esther Kudoro’s GitHub account contains multiple public repositories used for learning, practice tasks, fellowship exams, and datasets.
+The repositories include AI_Fellowship_Exam, all_tasks, Dataset, and other code repositories that showcase Python and Jupyter Notebook usage.
+These projects reflect hands-on practice in Python programming, data analysis, and machine learning exercises.
+Her GitHub work complements her engineering and analytics background with practical coding experience.

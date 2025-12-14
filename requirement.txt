@@ -14,7 +14,7 @@ hf_xet
 gdown
 PyPDF2
 chromadb
-sentence-transformer
+sentence-transformers
 faiss-cpu
 langchain 
 langchain-core 

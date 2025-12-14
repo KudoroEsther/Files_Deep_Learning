@@ -1,0 +1,5 @@
+The weekly task folders in the all_tasks repository represent Esther’s incremental learning journey in coding.
+Each folder corresponds to a different week, implying consistent practice and structured learning.
+This progression aids in building a strong foundation in Python syntax, control structures, data types, and libraries like Pandas.
+This practice also supports machine learning learning paths, given associated datasets in the Dataset repository.
+This demonstrates Esther’s commitment to continuous skill development through practical coding work.

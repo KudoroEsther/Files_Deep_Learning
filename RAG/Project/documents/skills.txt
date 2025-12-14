@@ -1,0 +1,6 @@
+Esther Kudoro has technical skills in electrical and electronics engineering.
+She has strong knowledge of power systems engineering and electrical fault analysis.
+Her data and machine learning skills include data analysis, feature engineering, and classification models.
+She has experience working with Python for data science and machine learning tasks.
+Esther is familiar with machine learning algorithms such as Random Forest.
+She also has experience deploying machine learning models using FastAPI.
