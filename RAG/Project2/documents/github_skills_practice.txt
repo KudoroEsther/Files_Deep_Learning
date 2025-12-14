@@ -1,0 +1,6 @@
+Esther practices Python programming and data analysis using Jupyter Notebooks across her GitHub repositories.
+Her work involves real datasets, indicating familiarity with CSV file handling and Pandas.
+She applies machine learning and data preprocessing techniques on multiple datasets.
+Her GitHub practice suggests a progression from basic programming to data work.
+Repositories include code for math logic, classification tasks, data cleansing, model evaluation, and dataset exploration.
+These hands-on projects support her technical skills listed on her LinkedIn profile.
