@@ -6,10 +6,12 @@ scikit_learn
 torch
 torchvision
 torchaudio
+ipywidgets
 scipy
 dotenv
 openai
 google.genai
+
 hf_xet
 gdown
 PyPDF2
