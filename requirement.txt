@@ -25,4 +25,4 @@ langchain-openai
 langchain-text-splitters
 ragas
 
-lang
+langgraph
