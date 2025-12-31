@@ -26,3 +26,4 @@ langchain-text-splitters
 ragas
 
 langgraph
+duckduckgo-search
