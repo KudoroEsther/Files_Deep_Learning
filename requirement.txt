@@ -27,3 +27,4 @@ ragas
 
 langgraph
 duckduckgo-search
+PyPDF
