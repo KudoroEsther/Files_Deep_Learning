@@ -28,3 +28,4 @@ ragas
 langgraph
 duckduckgo-search
 PyPDF
+langchain-chroma
