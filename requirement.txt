@@ -30,5 +30,6 @@ duckduckgo-search
 PyPDF
 langchain-chroma
 
+fastapi
 # to pip freeze the dependencies of a particular file. Use pipreqsnb file_path
 pipreqsnb 

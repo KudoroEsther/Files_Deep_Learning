@@ -14,7 +14,6 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 
-
 # Conversational memory
 from langchain_core.messages import HumanMessage, AIMessage
 print("libraries successfully imported!")
@@ -28,7 +27,7 @@ if not api_key:
 
 print("API key loaded")
 
-#File Loading
+#Loading and Chunking Documents
 data_path = r"C:\Users\owner\Desktop\Files_Deep_Learning\RAG\Project\documents"
 # Loading document
 documents = []
@@ -58,6 +57,7 @@ vectorstore = Chroma.from_documents(documents=chunks,
 
 vectorstore.persist()
 print(f"Embeddings created and saved to chroma_db")
+
 
 ## RAG Chain with LCEL
 # Initialize LLM
