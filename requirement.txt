@@ -29,3 +29,6 @@ langgraph
 duckduckgo-search
 PyPDF
 langchain-chroma
+
+# to pip freeze the dependencies of a particular file. Use pipreqsnb file_path
+pipreqsnb 
