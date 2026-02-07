@@ -1,3 +1,4 @@
 validators
+requests
 
 # use pipreqs . when you're ready
