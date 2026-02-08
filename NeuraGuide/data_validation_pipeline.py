@@ -14,9 +14,9 @@ def load_data(path:str):
     data = pd.read_csv(path)
     return data
 
-def save_cleaned_data(df: pd.DataFrame, filename: str, index: bool = False):
+def save_cleaned_data(data: pd.DataFrame, filename: str, index: bool = False):
     try: 
-        df.to_csv(filename, index = False)
+        data.to_csv(filename, index = False)
     except IOError as e:
         print(f"Error saving file: {e}")
     

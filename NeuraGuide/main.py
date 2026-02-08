@@ -27,4 +27,4 @@ cleaned_df, invalid_urls = validator.clean_urls()
 # reachable_df = validator.check_reachability()
 # print(reachable_df)
 
-saved_to_csv = save_cleaned_data("Cleaned_AI_Tools.csv")
+saved_to_csv = save_cleaned_data(data=cleaned_df, filename="Cleaned_AI_Tools.csv")
