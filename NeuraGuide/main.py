@@ -3,6 +3,7 @@ from data_validation_pipeline import(
     DuplicateHandler,
     MissingDataHandler,
     URLValidator,
+    YearValidator,
     save_cleaned_data
 )
 
@@ -29,5 +30,12 @@ cleaned_df, invalid_urls = validator.clean_urls()
 # Optional: Check reachability (slower), had to stop it because it took over 11mins and it wasn't done
 # reachable_df = validator.check_reachability()
 # print(reachable_df)
+
+validator = YearValidator(df, min_year=1970)
+print(validator.get_summary())
+corrected_df, corrections_log = validator.correct_years()
+# cleaned_df, invalid_records = validator.clean_years(strategy='nullify')
+
+
 
 # saved_to_csv = save_cleaned_data(data=cleaned_df, filename="Cleaned_AI_Tools.csv")

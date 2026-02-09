@@ -174,3 +174,115 @@ class URLValidator:
         return cleaned.drop(columns=['url_valid', 'url_missing']).reset_index(drop=True), invalid
 
 
+class YearValidator:
+    def __init__(self, df, year_column='Launch Year', min_year=1970, max_year=None):
+        self.df = df.copy()
+        self.year_column = year_column
+        self.min_year = min_year
+        self.max_year = max_year or pd.Timestamp.now().year
+        
+    def is_valid_year(self, year):
+        """Check if year is numeric and within range"""
+        if pd.isna(year):
+            return None  # Missing, not invalid
+        try:
+            year_int = int(float(year))
+            return self.min_year <= year_int <= self.max_year
+        except (ValueError, TypeError):
+            return False
+    
+    def validate_years(self):
+        """Validate all years and categorize issues"""
+        results = self.df.copy()
+        results['year_missing'] = results[self.year_column].isna()
+        results['year_valid'] = results[self.year_column].apply(self.is_valid_year)
+        
+        # Categorize invalid reasons
+        def categorize_invalid(row):
+            if row['year_missing']:
+                return 'missing'
+            if row['year_valid']:
+                return 'valid'
+            try:
+                year_int = int(float(row[self.year_column]))
+                if year_int > self.max_year:
+                    return 'future'
+                if year_int < self.min_year:
+                    return 'too_old'
+            except:
+                return 'non_numeric'
+            return 'invalid'
+        
+        results['year_issue'] = results.apply(categorize_invalid, axis=1)
+        return results
+    
+    def get_invalid_years(self):
+        """Get records with invalid years"""
+        validated = self.validate_years()
+        return validated[validated['year_issue'].isin(['future', 'too_old', 'non_numeric'])]
+    
+    def get_summary(self):
+        """Summary of year validation issues"""
+        validated = self.validate_years()
+        summary = validated['year_issue'].value_counts()
+        return summary
+    
+    def clean_years(self, strategy='remove'):
+        """
+        Clean invalid years
+        strategy: 'remove' (delete rows) or 'nullify' (set to NaN)
+        """
+        validated = self.validate_years()
+        
+        if strategy == 'remove':
+            cleaned = validated[validated['year_issue'].isin(['valid', 'missing'])]
+            invalid = validated[~validated['year_issue'].isin(['valid', 'missing'])]
+        elif strategy == 'nullify':
+            cleaned = validated.copy()
+            mask = ~cleaned['year_issue'].isin(['valid', 'missing'])
+            cleaned.loc[mask, self.year_column] = np.nan
+            invalid = validated[mask]
+        else:
+            raise ValueError("strategy must be 'remove' or 'nullify'")
+        
+        # Drop helper columns
+        cols_to_drop = ['year_missing', 'year_valid', 'year_issue']
+        cleaned = cleaned.drop(columns=cols_to_drop)
+        
+        return cleaned.reset_index(drop=True), invalid
+    
+    def correct_years(self):
+        """Attempt to correct obvious errors"""
+        corrected = self.df.copy()
+        corrections = []
+        
+        for idx, row in corrected.iterrows():
+            year = row[self.year_column]
+            if pd.isna(year):
+                continue
+                
+            try:
+                year_int = int(float(year))
+                original = year_int
+                
+                # Common errors: 2-digit years
+                if 0 <= year_int <= 99:
+                    year_int = 2000 + year_int if year_int <= self.max_year % 100 else 1900 + year_int
+                
+                # Future years: might be typo (e.g., 2025 instead of 2015)
+                if year_int > self.max_year:
+                    continue  # Can't reliably correct
+                
+                if year_int != original and self.min_year <= year_int <= self.max_year:
+                    corrected.at[idx, self.year_column] = year_int
+                    corrections.append({
+                        'index': idx,
+                        'original': original,
+                        'corrected': year_int,
+                        'tool': row.get('Tool Name', 'Unknown')
+                    })
+            except:
+                continue
+        
+        return corrected, pd.DataFrame(corrections)
+
