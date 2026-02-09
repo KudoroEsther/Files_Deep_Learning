@@ -15,6 +15,7 @@ google.genai
 hf_xet
 gdown
 PyPDF2
+PyPDF
 chromadb
 sentence-transformers
 faiss-cpu

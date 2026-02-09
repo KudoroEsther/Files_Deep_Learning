@@ -7,7 +7,10 @@ from data_validation_pipeline import(
 )
 
 # Loading data
-path = r"C:\Users\owner\Desktop\Files_Deep_Learning\NeuraGuide\AI_Tools.csv"
+# path = r"C:\Users\owner\Desktop\Files_Deep_Learning\NeuraGuide\AI_Tools.csv"
+# path = r"C:\Users\ncc333\Desktop\Deep_Learning\NeuraGuide\AI_Tools.csv"
+
+path = r"C:\Users\ncc333\Desktop\Deep_Learning\Cleaned_AI_Tools.csv"
 df = load_data(path)
 df = df.copy()
 
@@ -27,4 +30,4 @@ cleaned_df, invalid_urls = validator.clean_urls()
 # reachable_df = validator.check_reachability()
 # print(reachable_df)
 
-saved_to_csv = save_cleaned_data(data=cleaned_df, filename="Cleaned_AI_Tools.csv")
+# saved_to_csv = save_cleaned_data(data=cleaned_df, filename="Cleaned_AI_Tools.csv")
