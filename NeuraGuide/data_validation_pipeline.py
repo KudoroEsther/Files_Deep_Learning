@@ -100,14 +100,36 @@ class MissingDataHandler:
         logger.info(f"Flagged {flagged['has_missing'].sum()} records with missing values")
         return flagged
     
-    def remove_records(self):
-        """Remove rows with missing required fields"""
-        missing = self.find_missing()
-        cleaned = self.df[~self.df.index.isin(missing.index)]
-        logger.info(f"Removed {len(missing)} rows with missing values")
-        return cleaned.reset_index(drop=True), missing
+    # def remove_records(self):
+    #     """Remove rows with missing required fields"""
+    #     missing = self.find_missing()
+    #     cleaned = self.df[~self.df.index.isin(missing.index)]
+    #     logger.info(f"Removed {len(missing)} rows with missing values")
+    #     return cleaned.reset_index(drop=True), missing
     
-
+    def handle_missing_records(self, drop=False):
+        """Handle missing records: fill with median/mode or drop"""
+        if drop:
+            missing = self.find_missing()
+            cleaned = self.df[~self.df.index.isin(missing.index)]
+            logger.info(f"Removed {len(missing)} rows with missing values")
+            return cleaned.reset_index(drop=True), missing
+        
+        cleaned = self.df.copy()
+        for col in cleaned.columns:
+            if cleaned[col].isna().any():
+                if pd.api.types.is_numeric_dtype(cleaned[col]):
+                    fill_value = cleaned[col].median()
+                    if pd.isna(fill_value):  # If all values are NaN, use 0
+                        fill_value = 0
+                else:
+                    mode_vals = cleaned[col].mode()
+                    fill_value = mode_vals[0] if len(mode_vals) > 0 else "Unknown"
+                cleaned[col] = cleaned[col].fillna(fill_value)
+        
+        logger.info(f"Filled missing values")
+        return cleaned
+    
 class URLValidator:
     def __init__(self, df, url_column='Website'):
         self.df = df.copy()

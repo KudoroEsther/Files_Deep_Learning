@@ -14,16 +14,17 @@ from data_validation_pipeline import(
 )
 
 # Loading data
-path = r"C:\Users\owner\Desktop\Files_Deep_Learning\NeuraGuide\AI_Tools.csv"
+# path = r"C:\Users\owner\Desktop\Files_Deep_Learning\NeuraGuide\AI_Tools.csv"
 # path = r"C:\Users\ncc333\Desktop\Deep_Learning\NeuraGuide\AI_Tools.csv"
 
 # path = r"C:\Users\ncc333\Desktop\Deep_Learning\Cleaned_AI_Tools.csv"
+
+path = r"C:\Users\owner\Desktop\Files_Deep_Learning\Cleaned_AI_Tools5.csv"
 df = load_data(path)
 df = df.copy()
 
-df["Launch Year"] = np.where(df["Launch Year"] == "Unknown", 
-                             np.random.randint(2020, 2025, size=len(df)), 
-                             df["Launch Year"]) 
+mask = df["Launch Year"] == "Unknown"
+df.loc[mask, "Launch Year"] = np.random.randint(2020, 2025, size=mask.sum())
 
 df["average_rating"] = np.where(df["average_rating"] == 0.0, 
                              np.round(1 + 4 * np.random.beta(a=5, b=1.5, size=len(df)), 2), 
@@ -40,7 +41,7 @@ missing_handler = MissingDataHandler(cleaned_df)
 print(missing_handler.get_summary())
 flagged_df = missing_handler.flag_records()
 # # or
-cleaned_df, removed = missing_handler.remove_records()
+cleaned_df= missing_handler.handle_missing_records()
 
 
 
@@ -53,7 +54,7 @@ cleaned_df, invalid_urls = validator.clean_urls()
 # print(reachable_df)
 
 validator = YearValidator(cleaned_df)
-print(validator.get_summary())
+summary = validator.get_summary()
 cleaned_df, invalid_records = validator.clean_years(strategy='nullify')
 # 
 # # Or attempt corrections first
@@ -76,4 +77,4 @@ validator = DescriptionValidator(cleaned_df, min_length=10, min_words=3)
 summary = validator.get_summary()
 flagged_df = validator.flag_descriptions()
 
-save_cleaned_data(cleaned_df, filename="Cleaned_AI_Tools2.csv")
+save_cleaned_data(cleaned_df, filename="Cleaned_AI_Tools5.csv")
