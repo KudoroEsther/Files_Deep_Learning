@@ -56,7 +56,7 @@ cleaned_df, invalid_urls = validator.clean_urls()
 validator = YearValidator(cleaned_df)
 summary = validator.get_summary()
 cleaned_df, invalid_records = validator.clean_years(strategy='nullify')
-# 
+
 # # Or attempt corrections first
 # corrected_df, corrections_log = validator.correct_years()
 
