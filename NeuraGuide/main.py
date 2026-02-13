@@ -14,12 +14,9 @@ from data_validation_pipeline import(
 )
 
 # Loading data
-# path = r"C:\Users\owner\Desktop\Files_Deep_Learning\NeuraGuide\AI_Tools.csv"
-# path = r"C:\Users\ncc333\Desktop\Deep_Learning\NeuraGuide\AI_Tools.csv"
+path = r"C:\Users\ncc333\Desktop\Deep_Learning\NeuraGuide\AI_Tools.csv"
 
-# path = r"C:\Users\ncc333\Desktop\Deep_Learning\Cleaned_AI_Tools.csv"
 
-path = r"C:\Users\owner\Desktop\Files_Deep_Learning\Cleaned_AI_Tools5.csv"
 df = load_data(path)
 df = df.copy()
 
@@ -42,14 +39,13 @@ handler = DuplicateHandler(df)
 cleaned_df, removed_records = handler.remove_duplicates()
 
 missing_handler = MissingDataHandler(cleaned_df)
-print(missing_handler.get_summary())
+missing_handler.get_summary()
 flagged_df = missing_handler.flag_records()
 # # or
 cleaned_df= missing_handler.handle_missing_records()
 
 
-
-validator = URLValidator(df)
+validator = URLValidator(cleaned_df)
 print(f"Invalid URLs: {len(validator.get_invalid_urls())}")
 cleaned_df, invalid_urls = validator.clean_urls()
 
@@ -57,15 +53,15 @@ cleaned_df, invalid_urls = validator.clean_urls()
 # reachable_df = validator.check_reachability()
 # print(reachable_df)
 
+
 validator = YearValidator(cleaned_df)
 summary = validator.get_summary()
-cleaned_df, invalid_records = validator.clean_years(strategy='nullify')
+corrected_df, corrections_log = validator.correct_years()
+cleaned_df, invalid_records = validator.clean_years(strategy='remove')
 
-# # Or attempt corrections first
-# corrected_df, corrections_log = validator.correct_years()
 
 validator = NumericValidator(cleaned_df, rating_min=0, rating_max=5)
-print(validator.get_summary())
+validator.get_summary()
 flagged_df = validator.flag_records()
 # # or
 cleaned_df, invalid = validator.clean_records(strategy='nullify')
@@ -81,4 +77,4 @@ validator = DescriptionValidator(cleaned_df, min_length=10, min_words=3)
 summary = validator.get_summary()
 flagged_df = validator.flag_descriptions()
 
-save_cleaned_data(cleaned_df, filename="Cleaned_AI_Tools5.csv")
+# save_cleaned_data(cleaned_df, filename="Cleaned_AI_Tools5.csv")

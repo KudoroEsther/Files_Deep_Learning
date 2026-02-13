@@ -78,7 +78,6 @@ class DuplicateHandler:
 class MissingDataHandler:
     def __init__(self, df):
         self.df = df.copy()
-        # self.required_fields = required_fields or ['Tool Name', 'Category', 'Website']
         
     def find_missing(self):
         """Find rows with missing required fields"""
@@ -89,7 +88,7 @@ class MissingDataHandler:
         """Get missing data summary"""
         summary = pd.DataFrame({
             'missing_count': self.df.isna().sum(),
-            'missing_pct': (self.df.isna().sum() / len(self.df) * 100).round(2)
+            'missing_percentage': (self.df.isna().sum() / len(self.df) * 100).round(2)
         })
         return summary[summary['missing_count'] > 0].sort_values('missing_count', ascending=False)
     
@@ -130,6 +129,7 @@ class MissingDataHandler:
         logger.info(f"Filled missing values")
         return cleaned
     
+
 class URLValidator:
     def __init__(self, df, url_column='Website'):
         self.df = df.copy()
@@ -227,7 +227,7 @@ class URLValidator:
 
 
 class YearValidator:
-    def __init__(self, df, year_column='Launch Year', min_year=2020, max_year=2025):
+    def __init__(self, df, year_column='Launch Year', min_year=2015, max_year=2026):
         self.df = df.copy()
         self.year_column = year_column
         self.min_year = min_year
@@ -425,6 +425,7 @@ class NumericValidator:
         
         logger.info(f"Cleaned {len(invalid)} records with invalid numeric values")
         return cleaned.reset_index(drop=True), invalid
+
 
 class TextStandardizer:
     def __init__(self, df, text_columns=None):
