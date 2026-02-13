@@ -23,15 +23,19 @@ path = r"C:\Users\owner\Desktop\Files_Deep_Learning\Cleaned_AI_Tools5.csv"
 df = load_data(path)
 df = df.copy()
 
+# Replaced "Unknown" with a range of years from 2020 to 2025
 mask = df["Launch Year"] == "Unknown"
 df.loc[mask, "Launch Year"] = np.random.randint(2020, 2025, size=mask.sum())
 
+# Replaced 0.0 ratings with a range of values from 1 - 5 with a preference for high values
 df["average_rating"] = np.where(df["average_rating"] == 0.0, 
                              np.round(1 + 4 * np.random.beta(a=5, b=1.5, size=len(df)), 2), 
                              df["average_rating"]) 
 
+#Replaced 'Unknown' with the Tool Name
 mask = df["Company"] == "Unknown"
 df.loc[mask, "Company"] = df.loc[mask, "Tool Name"]
+
 
 # Identifying and removing duplicate tools
 handler = DuplicateHandler(df)
